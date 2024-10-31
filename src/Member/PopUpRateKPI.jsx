@@ -27,19 +27,30 @@ function PopUpRateKPI({ closePopUp }) {
         period = "Q4";
       }
 
-      await axios.put(`http://localhost:8080/api/pandora/ratemember`, null, {
-        params: {
-          senderId,
-          memberId,
-          period,
-          custFocus,
-          integrity,
-          teamwork,
-          cpoe,
-        },
-      });
+      const response = await axios.put(
+        `http://localhost:8080/api/pandora/ratemember`,
+        null,
+        {
+          params: {
+            senderId,
+            memberId,
+            period,
+            custFocus,
+            integrity,
+            teamwork,
+            cpoe,
+          },
+        }
+      );
 
-      // If successful, you can close the popup or provide feedback
+      console.log(response.data);
+
+      if (response.data === true) {
+        alert("Data Updated Successfully");
+      } else {
+        alert("Failed to Update Data");
+      }
+
       closePopUp();
     } catch (error) {
       console.error("Failed to submit ratings:", error);
@@ -54,7 +65,7 @@ function PopUpRateKPI({ closePopUp }) {
       <div className="label-input w100">
         <label htmlFor="custFocus">Cust Focus</label>
         <input
-          type="text"
+          type="number"
           name="custFocus"
           placeholder="Cust Focus"
           value={custFocus}
@@ -66,7 +77,7 @@ function PopUpRateKPI({ closePopUp }) {
       <div className="label-input w100">
         <label htmlFor="integrity">Integrity</label>
         <input
-          type="text"
+          type="number"
           name="integrity"
           placeholder="Integrity"
           value={integrity}
@@ -78,7 +89,7 @@ function PopUpRateKPI({ closePopUp }) {
       <div className="label-input w100">
         <label htmlFor="teamwork">Teamwork</label>
         <input
-          type="text"
+          type="number"
           name="teamwork"
           placeholder="Teamwork"
           value={teamwork}
@@ -90,7 +101,7 @@ function PopUpRateKPI({ closePopUp }) {
       <div className="label-input w100">
         <label htmlFor="cpoe">Cpoe</label>
         <input
-          type="text"
+          type="number"
           name="cpoe"
           placeholder="Cpoe"
           value={cpoe}

@@ -12,6 +12,15 @@ function POReportProduct() {
 
   const productOwnerId = localStorage.getItem("productOwnerId");
 
+  var totalTarget = productData?.pquarters.reduce(
+    (acc, quarter) => acc + (quarter.target || 0),
+    0
+  );
+  var totalDone = productData?.pquarters.reduce(
+    (acc, quarter) => acc + (quarter.done || 0),
+    0
+  );
+
   const openPopUp = () => {
     setIsPopUp(true);
   };
@@ -101,14 +110,14 @@ function POReportProduct() {
                       data: [
                         {
                           id: 0,
-                          value: 10,
-                          label: "series A",
+                          value: totalTarget,
+                          label: "Target",
                           className: "bg-blue",
                         },
                         {
                           id: 1,
-                          value: 15,
-                          label: "series B",
+                          value: totalDone,
+                          label: "Done",
                           className: "bg-yellow",
                         },
                       ],
