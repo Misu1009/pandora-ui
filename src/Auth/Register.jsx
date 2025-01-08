@@ -10,9 +10,16 @@ function Register() {
   const [productOwnerId, setProductOwnerId] = useState("");
   const [productOwners, setProductOwners] = useState([]); // Store product owners
   const [message, setMessage] = useState("");
+  const [emailError, setEmailError] = useState(""); // Email validation error
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // Check if email is valid
+    if (!validateEmail(email)) {
+      setEmailError("Email must end with @xyz.com");
+      return;
+    }
 
     try {
       const response = await axios.post(
@@ -31,6 +38,12 @@ function Register() {
       console.error("Failed Registration:", error);
       alert(error.message);
     }
+  };
+
+  const validateEmail = (email) => {
+    // Check if email ends with @xyz.com
+    const emailPattern = /^[a-zA-Z0-9._%+-]+@xyz\.com$/;
+    return emailPattern.test(email);
   };
 
   useEffect(() => {
@@ -80,11 +93,17 @@ function Register() {
           <input
             type="email"
             name="email"
-            placeholder="name@gmail.com"
+            placeholder="name@xyz.com"
             value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={(e) => {
+              setEmail(e.target.value);
+              setEmailError(""); // Clear error message on input change
+            }}
             required
           />
+          {emailError && (
+            <div className="error-message font-12 red-color">{emailError}</div>
+          )}
         </div>
         <div className="label-input">
           <label htmlFor="password">Password</label>

@@ -102,7 +102,7 @@ function POReportProduct() {
               </div>
             </div>
             <div className="chart-graph w100 h100">
-              <div className="chart-graph w100 h50">
+              <div className="chart-graph w100 h100 pl12">
                 Feature Submitted
                 <PieChart
                   series={[
@@ -110,7 +110,7 @@ function POReportProduct() {
                       data: [
                         {
                           id: 0,
-                          value: totalTarget,
+                          value: totalTarget-totalDone,
                           label: "Target",
                           className: "bg-blue",
                         },
@@ -123,13 +123,15 @@ function POReportProduct() {
                       ],
                     },
                   ]}
-                  width={400}
-                  height={100}
+                  width={300}
+                  height={300}
                 />
               </div>
-              <div className="chart-graph w100 h50">
-                Quarter Progress 2023
-                <BarChart
+
+            </div>
+            <div className="chart-graph w100 h100">
+              Quarter Progress 2023
+              <BarChart
                   xAxis={[
                     { scaleType: "band", data: ["Q1", "Q2", "Q3", "Q4"] },
                   ]}
@@ -154,22 +156,8 @@ function POReportProduct() {
                     },
                   ]}
                   width={400}
-                  height={150}
+                  height={300}
                 />
-              </div>
-            </div>
-            <div className="chart-graph w100 h100">
-              Feature Submitted
-              <BarChart
-                xAxis={[
-                  { scaleType: "band", data: ["Q1"], categoryGapRatio: 0.7 },
-                ]}
-                series={[
-                  { data: [productData?.totalFeature], className: "bg-blue" },
-                ]}
-                width={300}
-                height={300}
-              />
             </div>
           </div>
         </div>

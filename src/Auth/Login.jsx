@@ -90,6 +90,7 @@ function Login() {
               placeholder="email@gmail.com"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
+              required
             />
           </div>
           <div className="label-input black-color">
@@ -100,6 +101,7 @@ function Login() {
               placeholder="Password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
+              required
             />
           </div>
           <div className="pb12">

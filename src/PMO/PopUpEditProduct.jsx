@@ -6,9 +6,22 @@ function PopUpEditProduct({ closePopUp, productId }) {
   const [mico, setMico] = useState("");
   const [pangkat, setPangkat] = useState("");
   const [message, setMessage] = useState("");
+  const [errors, setErrors] = useState({});
 
   // Handle form submission
   const handleEdit = async () => {
+
+    const validationErrors = {};
+    if (!name) validationErrors.name = "name is required.";
+    if (!mico) validationErrors.mico = "mico is required.";
+
+    if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors);
+      return;
+    }
+
+    setErrors({}); // Clear errors if validation passes
+
     try {
       const response = await fetch(
         `http://localhost:8080/api/pandora/product/edit?productId=${productId}&name=${name}&mico=${mico}`,
@@ -33,7 +46,7 @@ function PopUpEditProduct({ closePopUp, productId }) {
   return (
     <div className="popup">
       <div className="font-16 font-semibold pb32 black-color">
-        Edit User Application
+        Edit Product
       </div>
       <div className="label-input w100">
         <label htmlFor="nilai1">Nama</label>
@@ -45,6 +58,7 @@ function PopUpEditProduct({ closePopUp, productId }) {
           onChange={(e) => setName(e.target.value)}
           required
         />
+        {errors.name && <div className="error-message">{errors.name}</div>}
       </div>
       <div className="label-input w100">
         <label htmlFor="nilai1">Mico</label>
@@ -56,6 +70,7 @@ function PopUpEditProduct({ closePopUp, productId }) {
           onChange={(e) => setMico(e.target.value)}
           required
         />
+        {errors.mico && <div className="error-message">{errors.mico}</div>}
       </div>
       <div className="space-between-center gap-button">
         <div className="btn-red" onClick={closePopUp}>

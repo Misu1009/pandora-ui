@@ -6,9 +6,24 @@ function PopUpEditUser({ closePopUp, userId }) {
   const [biro, setBiro] = useState("");
   const [pangkat, setPangkat] = useState("");
   const [message, setMessage] = useState("");
+  const [errors, setErrors] = useState({});
 
   // Handle form submission
   const handleEdit = async () => {
+    // Validation for empty fields
+    const validationErrors = {};
+    if (!name) validationErrors.name = "Nama is required.";
+    if (!division) validationErrors.division = "Division is required.";
+    if (!biro) validationErrors.biro = "Biro is required.";
+    if (!pangkat) validationErrors.pangkat = "Pangkat is required.";
+
+    if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors);
+      return;
+    }
+
+    setErrors({}); // Clear errors if validation passes
+
     try {
       const response = await fetch(
         `http://localhost:8080/api/pandora/edit?userId=${userId}&name=${name}&division=${division}&biro=${biro}&eselonTier=${pangkat}`,
@@ -34,8 +49,9 @@ function PopUpEditUser({ closePopUp, userId }) {
   return (
     <div className="popup">
       <div className="font-16 font-semibold pb32 black-color">
-        Edit User Application
+        Edit User
       </div>
+
       <div className="label-input w100">
         <label htmlFor="name">Nama</label>
         <input
@@ -46,7 +62,11 @@ function PopUpEditUser({ closePopUp, userId }) {
           onChange={(e) => setName(e.target.value)}
           required
         />
+        {errors.name && (
+          <div className="error-message">{errors.name}</div>
+        )}
       </div>
+
       <div className="label-input w100">
         <label htmlFor="division">Division</label>
         <input
@@ -57,7 +77,11 @@ function PopUpEditUser({ closePopUp, userId }) {
           onChange={(e) => setDivision(e.target.value)}
           required
         />
+        {errors.division && (
+          <div className="error-message">{errors.division}</div>
+        )}
       </div>
+
       <div className="label-input w100">
         <label htmlFor="biro">Biro</label>
         <input
@@ -68,7 +92,9 @@ function PopUpEditUser({ closePopUp, userId }) {
           onChange={(e) => setBiro(e.target.value)}
           required
         />
+        {errors.biro && <div className="error-message">{errors.biro}</div>}
       </div>
+
       <div className="label-input w100">
         <label htmlFor="pangkat">Pangkat</label>
         <input
@@ -79,7 +105,11 @@ function PopUpEditUser({ closePopUp, userId }) {
           onChange={(e) => setPangkat(e.target.value)}
           required
         />
+        {errors.pangkat && (
+          <div className="error-message">{errors.pangkat}</div>
+        )}
       </div>
+
       <div className="space-between-center gap-button">
         <div className="btn-red" onClick={closePopUp}>
           Cancel

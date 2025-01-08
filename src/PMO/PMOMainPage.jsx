@@ -5,6 +5,7 @@ import MainWalletLogo from "../Assets/MainWalletLogo.svg";
 function PMOMainPage() {
   const [message, setMessage] = useState("");
   const pmoId = localStorage.getItem("pmoId");
+  const getName = localStorage.getItem("getName");
 
   const handleEdit = async () => {
     try {
@@ -39,7 +40,7 @@ function PMOMainPage() {
             width={213}
           />
           <div className="font-14 font-regular pb12 black-color-50">
-            Hello, Kevin Wijaya!
+            Hello, {getName}!
           </div>
           <div className="font-16 font-medium pb32 black-color">
             Where Do you Want to Go?

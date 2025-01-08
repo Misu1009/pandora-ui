@@ -30,10 +30,19 @@ function PopUpInputKPI({ closePopUp }) {
   };
 
   const handleSubmit = () => {
+    // Trim and validate the input
     if (score.trim() === "") {
       setMessage("Please enter a valid score.");
       return;
     }
+
+    // Check if the score is a valid float
+    const isFloat = /^[+-]?([0-9]*[.])?[0-9]+$/.test(score);
+    if (!isFloat) {
+      setMessage("Please enter a float number.");
+      return;
+    }
+
     handleEdit();
   };
 
@@ -45,15 +54,16 @@ function PopUpInputKPI({ closePopUp }) {
       <div className="label-input w100">
         <label htmlFor="score">Score</label>
         <input
-          type="text"
+          type="number"
           name="score"
           placeholder="Enter Score"
           value={score}
           onChange={(e) => setScore(e.target.value)}
           required
         />
+        {message && <p className="error-message">{message}</p>}
       </div>
-      {message && <p className="font-16 red-color text-center">{message}</p>}
+      
       <div className="space-between-center gap-button">
         <div className="btn-red" onClick={closePopUp}>
           Cancel

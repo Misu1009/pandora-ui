@@ -11,6 +11,7 @@ function PMOReportProduct() {
   const [isPopUpOpen, setIsPopUp] = useState(false);
   const [message, setMessage] = useState("");
   const [productOwners, setProductOwners] = useState([]);
+  const getPMOId = localStorage.getItem("pmoId");
   const [productOwnerId, setProductOwnerId] = useState(
     localStorage.getItem("productOwnerId") || ""
   );
@@ -39,9 +40,9 @@ function PMOReportProduct() {
     const fetchProductOwners = async () => {
       try {
         const productOwnerResponse = await axios.get(
-          "http://localhost:8080/api/pandora/productowner/getAll"
+          `http://localhost:8080/api/pandora/pmo/getallproduct?pmoId=${getPMOId}`
         );
-        setProductOwners(productOwnerResponse.data.productOwners);
+        setProductOwners(productOwnerResponse.data.products);
       } catch (error) {
         console.error("Error fetching product owners:", error);
       }
@@ -128,7 +129,7 @@ function PMOReportProduct() {
               </div>
             </div>
             <div className="chart-graph w100 h100">
-              <div className="chart-graph w100 h50">
+              <div className="chart-graph w100 h100 pl12">
                 Feature Submitted
                 <PieChart
                   series={[
@@ -136,7 +137,7 @@ function PMOReportProduct() {
                       data: [
                         {
                           id: 0,
-                          value: totalTarget,
+                          value: totalTarget-totalDone,
                           label: "Target",
                           className: "bg-blue",
                         },
@@ -149,68 +150,50 @@ function PMOReportProduct() {
                       ],
                     },
                   ]}
-                  width={400}
-                  height={100}
-                />
-              </div>
-              <div className="chart-graph w100 h50">
-                Quarter Progress 2023
-                <BarChart
-                  xAxis={[
-                    { scaleType: "band", data: ["Q1", "Q2", "Q3", "Q4"] },
-                  ]}
-                  series={[
-                    {
-                      label: "Target",
-                      data: ["Q1", "Q2", "Q3", "Q4"].map(
-                        (quarter) =>
-                          productData?.pquarters.find(
-                            (q) => q.period === quarter
-                          )?.target || 0
-                      ),
-                      className: "bg-blue",
-                    },
-                    {
-                      label: "Done",
-                      data: ["Q1", "Q2", "Q3", "Q4"].map(
-                        (quarter) =>
-                          productData?.pquarters.find(
-                            (q) => q.period === quarter
-                          )?.done || 0
-                      ),
-                      className: "bg-yellow",
-                    },
-                  ]}
-                  width={400}
-                  height={150}
+                  width={300}
+                  height={300}
                 />
               </div>
             </div>
+
             <div className="chart-graph w100 h100">
-              <div className="space-between-center pb24">
-                <div className="card-label-filter pr12">List Product Owner</div>
-                <select
-                  className="filter"
-                  value={productOwnerId}
-                  onChange={handleProductOwnerChange}
-                >
-                  {productOwners.map((owner) => (
-                    <option key={owner.id} value={owner.id}>
-                      {owner.name}
-                    </option>
-                  ))}
-                </select>
+              <div className="space-between-center">
+              <div className="card-label-filter pr12">List Product Owner</div>
+              <select
+                className="filter"
+                value={productOwnerId}
+                onChange={handleProductOwnerChange}
+              >
+                {productOwners.map((owner) => (
+                  <option key={owner.id} value={owner.id}>
+                    {owner.name}
+                  </option>
+                ))}
+              </select>
               </div>
-              Feature Submitted
+              Quarter Progress 2023
               <BarChart
-                xAxis={[
-                  { scaleType: "band", data: ["Q1"], categoryGapRatio: 0.7 },
-                ]}
+                xAxis={[{ scaleType: "band", data: ["Q1", "Q2", "Q3", "Q4"] }]}
                 series={[
-                  { data: [productData?.totalFeature], className: "bg-blue" },
+                  {
+                    data: ["Q1", "Q2", "Q3", "Q4"].map(
+                      (quarter) =>
+                        productData?.pquarters.find((q) => q.period === quarter)
+                          ?.target || 0
+                    ),
+                    className: "bg-blue",
+                  },
+                  {
+                    data: ["Q1", "Q2", "Q3", "Q4"].map(
+                      (quarter) =>
+                        productData?.pquarters.find((q) => q.period === quarter)
+                          ?.done || 0
+                    ),
+                    className: "bg-yellow",
+                  },
                 ]}
-                width={300}
-                height={230}
+                width={400}
+                height={300}
               />
             </div>
           </div>

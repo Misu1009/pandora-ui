@@ -5,7 +5,8 @@ import MainWalletLogo from "../Assets/MainWalletLogo.svg";
 function POMainPage() {
   const [message, setMessage] = useState("");
   const productOwnerId = localStorage.getItem("productOwnerId");
-
+  const getName = localStorage.getItem("getName");
+  
   const handleEdit = async () => {
     try {
       const response = await fetch(
@@ -39,7 +40,7 @@ function POMainPage() {
             width={213}
           />
           <div className="font-14 font-regular pb12 black-color-50">
-            Hello, Kevin Wijaya!
+            Hello, {getName}!
           </div>
           <div className="font-16 font-medium pb32 black-color">
             Where Do you Want to Go?

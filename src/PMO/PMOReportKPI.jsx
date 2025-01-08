@@ -6,6 +6,7 @@ function PMOReportKPI() {
   const [memberData, setMemberData] = useState([]);
   const [message, setMessage] = useState("");
   const [productOwners, setProductOwners] = useState([]);
+  const getPMOId = localStorage.getItem("pmoId");
   const [productOwnerId, setProductOwnerId] = useState(
     localStorage.getItem("productOwnerId") || ""
   );
@@ -61,9 +62,9 @@ function PMOReportKPI() {
     const fetchProductOwners = async () => {
       try {
         const productOwnerResponse = await axios.get(
-          "http://localhost:8080/api/pandora/productowner/getAll"
+          `http://localhost:8080/api/pandora/pmo/getallproduct?pmoId=${getPMOId}`
         );
-        setProductOwners(productOwnerResponse.data.productOwners);
+        setProductOwners(productOwnerResponse.data.products);
       } catch (error) {
         console.error("Error fetching product owners:", error);
       }

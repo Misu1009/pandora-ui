@@ -17,31 +17,18 @@ function PopUpDetailReportMember({
             </div>
           </div>
 
-          <BarChart
-            xAxis={[
-              {
-                scaleType: "band",
-                data: ["Subtasks"],
-                categoryGapRatio: 0.2,
-                barGapRatio: 0.5,
-              },
-            ]}
-            series={[
-              {
-                data: [totalFeature],
-                className: "bg-blue",
-                label: "Feature Submitted         ",
-              },
-              {
-                data: [totalSubtask],
-                className: "bg-yellow",
-                label: "Subtask Involved",
-              },
-            ]}
-            categoryGapRatio={0.5}
-            width={700}
-            height={200}
-          />
+          <div className="space-between-start w100 mt24">
+            <div className="chart-score bg-yellow">
+              <i class="bx bx-category font-24"></i>
+              <div className="font-12 font-bold">Total Feature</div>
+              <div className="font-24 font-bold">{totalFeature}</div>
+            </div>
+            <div className="chart-score bg-orange">
+              <i class="bx bx-collection font-24"></i>
+              <div className="font-12 font-bold">Total Subtask</div>
+              <div className="font-24 font-bold">{totalSubtask}</div>
+            </div>
+          </div>
         </div>
         <div className="space-between-start">
           <div className="card-title">Dashboard Members</div>

@@ -59,7 +59,7 @@ function PMOMasterUser() {
                 <th>Biro</th>
                 <th>Pangkat</th>
                 <th>Role</th>
-                <th className="last-child">Edit</th>
+                <th className="last-child" style={{ whiteSpace: 'nowrap' }}>Edit</th>
               </tr>
             </thead>
             <tbody>

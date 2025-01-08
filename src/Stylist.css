@@ -84,6 +84,9 @@ a{
 .mr24{
   margin-right: 24px;
 }
+.mt24{
+  margin-top: 24px;
+}
 .w100{
   width: 100%;
 }
@@ -150,6 +153,11 @@ body {
   background-color: #F7F8F9;
   transition: all 0.5s ease;
 }
+
+.error-message{
+  font-size: small;
+  color: var(--red-color);
+}
 /* navbar */
 .navbar {
   position: fixed;
@@ -161,7 +169,7 @@ body {
   align-items: center;
   justify-content: space-between;
   padding: 20px 50px 20px 20px;
-  z-index: 1000;
+  z-index: 10;
 }
 .logo {
   display: flex;
@@ -205,7 +213,7 @@ body {
   left: 0;
   height: 100%;
   padding: 80px 20px;
-  z-index: 100;
+  z-index: 9;
   overflow-y: scroll;
   transition: all 0.5s ease;
 }
@@ -371,8 +379,8 @@ body {
   text-align: center;
   z-index: 1;
   cursor:pointer;
-  right: 32px;
-  top: 20px;
+  right: 75px;
+  top: 40px;
 }
 .dropdown-logout a {
   padding: 12px 20px;
@@ -844,6 +852,7 @@ table{
   border-collapse: collapse;
   border-spacing: 0;
   margin-top: 16px;
+  width: 100%;
 }
 
 table th{
@@ -936,7 +945,7 @@ td{
   transform: translate(-50%, -50%);
   background-color: var(--white-color);
   padding: 40px;
-  z-index: 9999;
+  z-index: 100;
   color: black;
   box-shadow: 0px 0px 12px 10000px #00000080;
   border-radius: 12px;
@@ -979,4 +988,34 @@ td{
   flex-direction: column; 
   width: 100vw;
   height: 100vh;
+}
+
+.message-popup {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: white;
+  padding: 10px 20px;
+  border-radius: 5px;
+  z-index: 10;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  animation: fadeIn 0.3s ease;
+}
+
+.message-popup.success {
+  background-color: #28a745;
+}
+
+.message-popup.error {
+  background-color: #dc3545;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }

@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "boxicons/css/boxicons.min.css";
 import "../../src/Stylist.css";
-import ProfileImage from "../Assets/profile.jpg";
 import axios from "axios";
 import Logout from "../Auth/Logout";
 import SmallPandoraLogo from "../Assets/SmallPandoraLogo.svg";
@@ -92,7 +91,11 @@ function Navbar() {
             <div className="font-14 black-color">{getName}</div>
             <i className="bx bx-chevron-down"></i>
             <Logout />
-            <img src={ProfileImage} alt="" className="profile" />
+            <img
+              src="https://icon-library.com/images/no-profile-picture-icon/no-profile-picture-icon-15.jpg"
+              alt="Profile"
+              className="profile"
+            />
           </div>
         </div>
       </nav>

@@ -54,10 +54,10 @@ function PMOMasterUserProduct() {
               {userData.map((userproduct, index) => (
                 <tr key={userproduct.id}>
                   <td>{index + 1}</td>
-                  <td>{userproduct.name + 1}</td>
-                  <td>{userproduct.udomain + 1}</td>
-                  <td>{userproduct.idBluePrint + 1}</td>
-                  <td>{userproduct.productName + 1}</td>
+                  <td>{userproduct.name}</td>
+                  <td>{userproduct.udomain}</td>
+                  <td>{userproduct.idBluePrint}</td>
+                  <td>{userproduct.productName}</td>
                 </tr>
               ))}
             </tbody>
