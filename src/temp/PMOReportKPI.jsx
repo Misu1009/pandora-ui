@@ -114,9 +114,7 @@ function PMOReportKPI() {
                 <th rowSpan="2">Domain</th>
                 <th rowSpan="2">Name</th>
                 <th rowSpan="2">Product</th>
-                <th rowSpan="2" className="border">
-                  KPI Product
-                </th>
+                <th rowSpan="2">Role</th>
                 <th rowSpan="2" className="border">
                   Quarter
                 </th>
@@ -130,7 +128,7 @@ function PMOReportKPI() {
                   Individual Commitment JIRA
                 </th>
                 <th rowSpan="2" className="border last-child">
-                  KPI Final
+                  KPI Product
                 </th>
               </tr>
               <tr>
@@ -177,17 +175,15 @@ function PMOReportKPI() {
                           >
                             {member.productName}
                           </td>
+                          <td
+                            rowSpan={member.kquarters.length}
+                            className={memberIndex % 2 === 0 ? "odd" : "even"}
+                          >
+                            {member.role}
+                          </td>
                         </>
                       )}
 
-                      {quarterIndex === 0 && (
-                        <td
-                          rowSpan={member.kquarters.length}
-                          className={memberIndex % 2 === 0 ? "odd" : "even"}
-                        >
-                          {member.kpiProductSore}
-                        </td>
-                      )}
                       <td>{quarter.period}</td>
                       <td>{quarter.target}</td>
                       <td>{quarter.done}</td>
@@ -214,7 +210,7 @@ function PMOReportKPI() {
                           rowSpan={member.kquarters.length}
                           className={memberIndex % 2 === 0 ? "odd" : "even"}
                         >
-                          {member.kpiFinal}
+                          {member.kpiProductSore}
                         </td>
                       )}
                     </tr>

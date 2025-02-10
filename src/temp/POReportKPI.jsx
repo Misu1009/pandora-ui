@@ -2,14 +2,12 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Navbar from "../Navbar/Navbar";
 
-function PMOReportKPI() {
+function POReportKPI() {
   const [memberData, setMemberData] = useState([]);
   const [message, setMessage] = useState("");
-  const [productOwners, setProductOwners] = useState([]);
-  const getPMOId = localStorage.getItem("pmoId");
-  const [productOwnerId, setProductOwnerId] = useState(
-    localStorage.getItem("productOwnerId") || ""
-  );
+  const productOwnerId = localStorage.getItem("productOwnerId");
+  const getName = localStorage.getItem("getName");
+  const getRole = localStorage.getItem("getRole");
 
   useEffect(() => {
     let isMounted = true;
@@ -35,71 +33,24 @@ function PMOReportKPI() {
     };
   }, [productOwnerId]);
 
-  // const fetchData = async () => {
-  //   try {
-  //     const response = await axios.get(
-  //       `http://localhost:8080/api/pandora/productowner/getmemberkpis?productOwnerId=${productOwnerId}`
-  //     );
-
-  //     if (isMounted) {
-  //       const sortedData = response.data.memberKPIDList.map((member) => ({
-  //         ...member,
-  //         kquarters: member.kquarters.sort((a, b) => {
-  //           const order = { Q1: 1, Q2: 2, Q3: 3, Q4: 4 };
-  //           return order[a.period] - order[b.period];
-  //         }),
-  //       }));
-
-  //       setMemberData(sortedData);
-  //     }
-  //   } catch (error) {
-  //     console.error("Error fetching data:", error);
-  //     setMessage("Error fetching data. Please try again later.");
-  //   }
-  // };
-
-  useEffect(() => {
-    const fetchProductOwners = async () => {
-      try {
-        const productOwnerResponse = await axios.get(
-          `http://localhost:8080/api/pandora/pmo/getallproduct?pmoId=${getPMOId}`
-        );
-        setProductOwners(productOwnerResponse.data.products);
-      } catch (error) {
-        console.error("Error fetching product owners:", error);
-      }
-    };
-
-    fetchProductOwners();
-  }, []);
-
-  // Handle product owner dropdown
-  const handleProductOwnerChange = (e) => {
-    const selectedProductOwnerId = e.target.value;
-    setProductOwnerId(selectedProductOwnerId);
-    localStorage.setItem("productOwnerId", selectedProductOwnerId);
-  };
-
   return (
     <>
       <div className="content-all">
         <Navbar />
+        <div className="content-label">
+          {getName} ({getRole})
+        </div>
         <div className="content-box-scroll">
           <div className="space-between-start">
             <div className="card-title">Dashboard Members</div>
             <div className="space-between-center">
-              <div className="card-label-filter pr12">List Product Owner</div>
-              <select
-                className="filter"
-                value={productOwnerId}
-                onChange={handleProductOwnerChange}
+              <a
+                className="small-btn-blue"
+                href={`http://localhost:8080/api/pandora/productowner/downloadmemberkpi?productOwnerId=${productOwnerId}`}
               >
-                {productOwners.map((owner) => (
-                  <option key={owner.id} value={owner.id}>
-                    {owner.name}
-                  </option>
-                ))}
-              </select>
+                <div className="font-14 font-medium pr12 button-fix">Excel</div>
+                <i className="bx bxs-to-top font-16 rotate-180"></i>
+              </a>
             </div>
           </div>
 
@@ -114,9 +65,7 @@ function PMOReportKPI() {
                 <th rowSpan="2">Domain</th>
                 <th rowSpan="2">Name</th>
                 <th rowSpan="2">Product</th>
-                <th rowSpan="2" className="border">
-                  KPI Product
-                </th>
+                <th rowSpan="2">Role</th>
                 <th rowSpan="2" className="border">
                   Quarter
                 </th>
@@ -130,7 +79,7 @@ function PMOReportKPI() {
                   Individual Commitment JIRA
                 </th>
                 <th rowSpan="2" className="border last-child">
-                  KPI Final
+                  KPI Product
                 </th>
               </tr>
               <tr>
@@ -177,17 +126,15 @@ function PMOReportKPI() {
                           >
                             {member.productName}
                           </td>
+                          <td
+                            rowSpan={member.kquarters.length}
+                            className={memberIndex % 2 === 0 ? "odd" : "even"}
+                          >
+                            {member.role}
+                          </td>
                         </>
                       )}
 
-                      {quarterIndex === 0 && (
-                        <td
-                          rowSpan={member.kquarters.length}
-                          className={memberIndex % 2 === 0 ? "odd" : "even"}
-                        >
-                          {member.kpiProductSore}
-                        </td>
-                      )}
                       <td>{quarter.period}</td>
                       <td>{quarter.target}</td>
                       <td>{quarter.done}</td>
@@ -214,7 +161,7 @@ function PMOReportKPI() {
                           rowSpan={member.kquarters.length}
                           className={memberIndex % 2 === 0 ? "odd" : "even"}
                         >
-                          {member.kpiFinal}
+                          {member.kpiProductSore}
                         </td>
                       )}
                     </tr>
@@ -229,4 +176,4 @@ function PMOReportKPI() {
   );
 }
 
-export default PMOReportKPI;
+export default POReportKPI;

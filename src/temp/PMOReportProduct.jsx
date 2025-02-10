@@ -128,70 +128,37 @@ function PMOReportProduct() {
                 <div className="font-24 font-bold">{productData?.kpiScore}</div>
               </div>
             </div>
-            <div className="chart-graph w100 h100 pl12">
+            <div className="chart-graph w100 h100">
+              <div className="chart-graph w100 h100 pl12">
                 Feature Submitted
-                <div style={{ textAlign: "center" }}>
-                  <PieChart
-                    series={[
-                      {
-                        cx: 150,
-      cy: 150,
-                        data: [
-                          {
-                            id: 0,
-                            value: totalTarget - totalDone,
-                            className: "bg-blue",
-                          },
-                          {
-                            id: 1,
-                            value: totalDone,
-                            className: "bg-yellow",
-                          },
-                        ]
-                      },
-                    ]}
-                    width={300}
-                    height={260}
-                  />
-                  <div
-                    style={{
-                      marginTop: "10px",
-                      display: "flex",
-                      justifyContent: "center",
-                      gap: "20px",
-                    }}
-                  >
-                    <div>
-                      <span
-                        style={{
-                          backgroundColor: "rgb(2, 178, 175)",
-                          width: "12px",
-                          height: "12px",
-                          display: "inline-block",
-                          marginRight: "5px",
-                        }}
-                      ></span>
-                      UnFinalized
-                    </div>
-                    <div>
-                      <span
-                        style={{
-                          backgroundColor: "rgb(46, 150, 255)",
-                          width: "12px",
-                          height: "12px",
-                          display: "inline-block",
-                          marginRight: "5px",
-                        }}
-                      ></span>
-                      Finalized
-                    </div>
-                  </div>
-                </div>
+                <PieChart
+                  series={[
+                    {
+                      data: [
+                        {
+                          id: 0,
+                          value: totalTarget-totalDone,
+                          label: "Target",
+                          className: "bg-blue",
+                        },
+                        {
+                          id: 1,
+                          value: totalDone,
+                          label: "Done",
+                          className: "bg-yellow",
+                        },
+                      ],
+                    },
+                  ]}
+                  width={300}
+                  height={300}
+                />
               </div>
+            </div>
 
             <div className="chart-graph w100 h100">
-              <div className="space-between-center pb12">
-              <div className="card-label-filter pr12 mb12">List Product Owner</div>
+              <div className="space-between-center">
+              <div className="card-label-filter pr12">List Product Owner</div>
               <select
                 className="filter"
                 value={productOwnerId}

@@ -104,98 +104,60 @@ function POReportProduct() {
             <div className="chart-graph w100 h100">
               <div className="chart-graph w100 h100 pl12">
                 Feature Submitted
-                <div style={{ textAlign: "center" }}>
-                  <PieChart
-                    series={[
-                      {
-                        cx: 150,
-      cy: 150,
-                        data: [
-                          {
-                            id: 0,
-                            value: totalTarget - totalDone,
-                            className: "bg-blue",
-                          },
-                          {
-                            id: 1,
-                            value: totalDone,
-                            className: "bg-yellow",
-                          },
-                        ]
-                      },
-                    ]}
-                    width={300}
-                    height={260}
-                  />
-                  <div
-                    style={{
-                      marginTop: "10px",
-                      display: "flex",
-                      justifyContent: "center",
-                      gap: "20px",
-                    }}
-                  >
-                    <div>
-                      <span
-                        style={{
-                          backgroundColor: "rgb(2, 178, 175)",
-                          width: "12px",
-                          height: "12px",
-                          display: "inline-block",
-                          marginRight: "5px",
-                        }}
-                      ></span>
-                      UnFinalized
-                    </div>
-                    <div>
-                      <span
-                        style={{
-                          backgroundColor: "rgb(46, 150, 255)",
-                          width: "12px",
-                          height: "12px",
-                          display: "inline-block",
-                          marginRight: "5px",
-                        }}
-                      ></span>
-                      Finalized
-                    </div>
-                  </div>
-                </div>
+                <PieChart
+                  series={[
+                    {
+                      data: [
+                        {
+                          id: 0,
+                          value: totalTarget-totalDone,
+                          label: "Target",
+                          className: "bg-blue",
+                        },
+                        {
+                          id: 1,
+                          value: totalDone,
+                          label: "Done",
+                          className: "bg-yellow",
+                        },
+                      ],
+                    },
+                  ]}
+                  width={300}
+                  height={300}
+                />
               </div>
+
             </div>
             <div className="chart-graph w100 h100">
-              <div className="pb12">
-                <a className="small-btn-blue" onClick={openPopUp}>
-                  <div className="font-14 font-medium pr12">
-                    Input KPI Product Score
-                  </div>
-                  <i className="bx bx-plus font-16 rotate-180"></i>
-                </a>
-              </div>
               Quarter Progress 2023
               <BarChart
-                xAxis={[{ scaleType: "band", data: ["Q1", "Q2", "Q3", "Q4"] }]}
-                series={[
-                  {
-                    data: ["Q1", "Q2", "Q3", "Q4"].map(
-                      (quarter) =>
-                        productData?.pquarters.find((q) => q.period === quarter)
-                          ?.target || 0
-                    ),
-                    className: "bg-blue",
-                  },
-                  {
-                    data: ["Q1", "Q2", "Q3", "Q4"].map(
-                      (quarter) =>
-                        productData?.pquarters.find((q) => q.period === quarter)
-                          ?.done || 0
-                    ),
-                    className: "bg-yellow",
-                  },
-                ]}
-                width={400}
-                height={300}
-              />
+                  xAxis={[
+                    { scaleType: "band", data: ["Q1", "Q2", "Q3", "Q4"] },
+                  ]}
+                  series={[
+                    {
+                      data: ["Q1", "Q2", "Q3", "Q4"].map(
+                        (quarter) =>
+                          productData?.pquarters.find(
+                            (q) => q.period === quarter
+                          )?.target || 0
+                      ),
+                      className: "bg-blue",
+                    },
+                    {
+                      data: ["Q1", "Q2", "Q3", "Q4"].map(
+                        (quarter) =>
+                          productData?.pquarters.find(
+                            (q) => q.period === quarter
+                          )?.done || 0
+                      ),
+                      className: "bg-yellow",
+                    },
+                  ]}
+                  width={400}
+                  height={300}
+                />
             </div>
           </div>
         </div>
@@ -203,6 +165,12 @@ function POReportProduct() {
           <div className="space-between-start">
             <div className="card-title">Dashboard Product</div>
             <div className="space-between-center">
+              <a className="small-btn-blue" onClick={openPopUp}>
+                <div className="font-14 font-medium pr12">
+                  Input KPI Product Score
+                </div>
+                <i className="bx bx-plus font-16 rotate-180"></i>
+              </a>
               <a
                 className="small-btn-blue"
                 href={`http://localhost:8080/api/pandora/productowner/downloadproduct?productOwnerId=${productOwnerId}`}

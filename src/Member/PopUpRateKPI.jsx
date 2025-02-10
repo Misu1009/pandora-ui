@@ -29,7 +29,8 @@ function PopUpRateKPI({ closePopUp, setMessage, userId }) {
     try {
       const now = new Date();
       const month = now.getMonth() + 1;
-      const period = month <= 3 ? "Q1" : month <= 6 ? "Q2" : month <= 9 ? "Q3" : "Q4";
+      // const period = month <= 3 ? "Q1" : month <= 6 ? "Q2" : month <= 9 ? "Q3" : "Q4";
+      const period = "Q4"; // period untuk dicustome ketika rate kpi
 
       const response = await axios.put(
         `http://localhost:8080/api/pandora/ratemember`,

@@ -14,18 +14,18 @@ function PopUpInputKPI({ closePopUp }) {
           method: "POST",
         }
       );
-
-      if (response.ok) {
-        setMessage("KPI Product Score updated successfully.");
+      const data = await response.json();
+      if (data === true) {
+        alert("KPI Product Score updated successfully.");
         window.location.href = "/po-report-product";
         closePopUp();
-      } else {
-        const data = await response.json();
-        setMessage(data.message);
+      } else if (data === false) {
+        alert("KPI updates are allowed only in Q4");
+        window.location.href = "/po-report-product";
       }
     } catch (error) {
       console.error("Error editing KPI score:", error);
-      setMessage("Error editing KPI score. Please try again later.");
+      alert("Error editing KPI score. Please try again later.");
     }
   };
 
@@ -63,7 +63,7 @@ function PopUpInputKPI({ closePopUp }) {
         />
         {message && <p className="error-message">{message}</p>}
       </div>
-      
+
       <div className="space-between-center gap-button">
         <div className="btn-red" onClick={closePopUp}>
           Cancel

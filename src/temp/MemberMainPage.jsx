@@ -12,11 +12,6 @@ function MemberMainPage() {
   const [message, setMessage] = useState(""); // State for the popup message
   const getMemberId = localStorage.getItem("getMemberId");
 
-  const now = new Date();
-  const month = now.getMonth() + 1;
-  // const getPeriod = month <= 3 ? "1" : month <= 6 ? "2" : month <= 9 ? "3" : "4";
-  const getPeriod = "Q4" // period untuk dicustome ketika getothermember
-
   const openPopUp = (userId) => {
     setSelectedUserId(userId);
     setIsPopUp(true);
@@ -27,11 +22,13 @@ function MemberMainPage() {
     setSelectedUserId(null);
   };
 
+  
+
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:8080/api/pandora/getothermember?memberId=${getMemberId}&period=${getPeriod}`
+          `http://localhost:8080/api/pandora/getothermember?memberId=${getMemberId}`
         );
         setMemberData(response.data.otherMembers);
       } catch (error) {
@@ -40,7 +37,7 @@ function MemberMainPage() {
     };
 
     fetchData();
-  }, [getMemberId, getPeriod]);
+  }, [getMemberId]);
 
   return (
     <>

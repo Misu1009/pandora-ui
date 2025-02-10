@@ -6,10 +6,7 @@
   box-sizing: border-box;
   font-family: "Poppins", sans-serif;
 }
-.css-1evyvmv-MuiChartsSurface-root{
-  display: flex;
-  align-items: center;
-}
+
 :root {
   --background-color: #F7F8F9;
   --white-color:#fff;

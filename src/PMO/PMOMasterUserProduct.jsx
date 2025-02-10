@@ -2,9 +2,55 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Navbar from "../Navbar/Navbar";
 import PopUpEditProduct from "./PopUpEditProduct";
+import SearchIcon from "@mui/icons-material/Search";
+import { styled, alpha } from "@mui/material/styles";
+import InputBase from "@mui/material/InputBase";
+
+const Search = styled("div")(({ theme }) => ({
+  position: "relative",
+  borderRadius: theme.shape.borderRadius,
+  backgroundColor: alpha(theme.palette.common.white, 0.15),
+  "&:hover": {
+    backgroundColor: alpha(theme.palette.common.white, 0.25),
+  },
+  marginLeft: 0,
+  width: "100%",
+  [theme.breakpoints.up("sm")]: {
+    marginLeft: theme.spacing(1),
+    width: "auto",
+  },
+}));
+
+const SearchIconWrapper = styled("div")(({ theme }) => ({
+  padding: theme.spacing(0, 2),
+  height: "100%",
+  position: "absolute",
+  pointerEvents: "none",
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+}));
+
+const StyledInputBase = styled(InputBase)(({ theme }) => ({
+  color: "inherit",
+  "& .MuiInputBase-input": {
+    padding: theme.spacing(1, 1, 1, 0),
+    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
+    transition: theme.transitions.create("width"),
+    width: "100%",
+    [theme.breakpoints.up("sm")]: {
+      width: "20ch",
+      "&:focus": {
+        width: "30ch",
+      },
+    },
+  },
+}));
+
 function PMOMasterUserProduct() {
   const [isPopUpOpen, setIsPopUp] = useState(false);
   const [userData, setUserData] = useState([]);
+  const [searchQuery, setSearchQuery] = useState(""); // State for the search input
   const getPMOId = localStorage.getItem("pmoId");
 
   const openPopUp = () => {
@@ -30,6 +76,18 @@ function PMOMasterUserProduct() {
     fetchData();
   }, [getPMOId]);
 
+  // Filter userData based on search query
+  const filteredData = userData.filter(
+    (userproduct) =>
+      userproduct.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      userproduct.udomain.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      userproduct.idBluePrint
+        .toString()
+        .toLowerCase()
+        .includes(searchQuery.toLowerCase()) ||
+      userproduct.productName.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
   return (
     <>
       {isPopUpOpen && <PopUpEditProduct closePopUp={closePopUp} />}
@@ -39,6 +97,17 @@ function PMOMasterUserProduct() {
         <div className="content-box content-box-scroll-x">
           <div className="space-between-start">
             <div className="card-title">Master User Product</div>
+            <Search>
+              <SearchIconWrapper>
+                <SearchIcon />
+              </SearchIconWrapper>
+              <StyledInputBase
+                placeholder="Search…"
+                inputProps={{ "aria-label": "search" }}
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)} // Update search input
+              />
+          </Search>
           </div>
           <table>
             <thead>
@@ -51,7 +120,7 @@ function PMOMasterUserProduct() {
               </tr>
             </thead>
             <tbody>
-              {userData.map((userproduct, index) => (
+              {filteredData.map((userproduct, index) => (
                 <tr key={userproduct.id}>
                   <td>{index + 1}</td>
                   <td>{userproduct.name}</td>

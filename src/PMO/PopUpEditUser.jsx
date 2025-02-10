@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-function PopUpEditUser({ closePopUp, userId }) {
+function PopUpEditUser({ closePopUp, userId, role}) {
   const [name, setName] = useState("");
   const [division, setDivision] = useState("");
   const [biro, setBiro] = useState("");
@@ -26,7 +26,7 @@ function PopUpEditUser({ closePopUp, userId }) {
 
     try {
       const response = await fetch(
-        `http://localhost:8080/api/pandora/edit?userId=${userId}&name=${name}&division=${division}&biro=${biro}&eselonTier=${pangkat}`,
+        `http://localhost:8080/api/pandora/edit?userId=${userId}&role=${role}&name=${name}&division=${division}&biro=${biro}&eselonTier=${pangkat}`,
         {
           method: "PUT",
         }

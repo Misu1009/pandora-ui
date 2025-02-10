@@ -9,17 +9,20 @@ function PMOMasterUser() {
   const [isPopUpOpen, setIsPopUp] = useState(false);
   const [userData, setUserData] = useState([]);
   const [selectedUserId, setSelectedUserId] = useState(null);
+  const [selectedUserRole, setSelectedUserRole] = useState(null);
 
   const getPMOId = localStorage.getItem("pmoId");
 
-  const openPopUp = (userId) => {
+  const openPopUp = (userId, userRole) => {
     setSelectedUserId(userId);
+    setSelectedUserRole(userRole);
     setIsPopUp(true);
   };
 
   const closePopUp = () => {
     setIsPopUp(false);
     setSelectedUserId(null);
+    setSelectedUserRole(null);
   };
 
   useEffect(() => {
@@ -40,7 +43,7 @@ function PMOMasterUser() {
   return (
     <>
       {isPopUpOpen && (
-        <PopUpEditUser closePopUp={closePopUp} userId={selectedUserId} />
+        <PopUpEditUser closePopUp={closePopUp} userId={selectedUserId} role={selectedUserRole} />
       )}
       <Navbar />
       <div className="content-all">
@@ -74,7 +77,7 @@ function PMOMasterUser() {
                   <td>{user.eselonTier}</td>
                   <td>{user.role}</td>
                   <td>
-                    <a className="no-deco" onClick={() => openPopUp(user.id)}>
+                    <a className="no-deco" onClick={() => openPopUp(user.id, user.role)}>
                       <i className="bx bxs-pencil yellow-color f24"></i>
                     </a>
                   </td>
